@@ -24,3 +24,13 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
         return $request->user();
     });
 });
+//api de articulos
+Route::apiResources([
+    'articles' => 'API\ArticleController',
+]);
+
+Route::fallback(function(){
+    return response()->json([
+        'message' => 'Page Not Found. If error persists, contact sergioans95@hotmail.com'], 404);
+});
+
