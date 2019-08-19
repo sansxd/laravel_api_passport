@@ -15,9 +15,13 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
+            $table->bigInteger('user_id')->unsigned()->index();
             $table->string('title');
             $table->text('body');
             $table->timestamps();
+            //forenkey de user_id referente a id en la tabla users
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+
         });
     }
 

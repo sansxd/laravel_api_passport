@@ -5,6 +5,7 @@ namespace laravelito;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use laravelito\Article;
 
 class User extends Authenticatable
 {
@@ -36,4 +37,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    //relacion de articulos con usuario
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
 }
