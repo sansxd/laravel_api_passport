@@ -3,8 +3,10 @@
 namespace laravelito\Exceptions;
 
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
@@ -48,22 +50,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        // This will replace our 404 response with
-        // a JSON response
-        // if ($exception instanceof ModelNotFoundException &&
-        //     $request->wantsJson()) {
-        //     return response()->json([
-        //         'data' => 'Resource not found',
-        //     ], 404);
-        // }
-
-        // return parent::render($request, $exception);
-
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
                 'error' => 'Entry for ' . str_replace('App\\', '', $exception->getModel()) . ' not found'], 404);
         }
-        if ($exception instanceof ValidationException) {
+        //esto cambia el mensaje json , ya que por defecto viene en ingles.
+        elseif ($exception instanceof ValidationException) {
             return response()->json(['message' => 'Los datos proporcionados no son válidos.', 'errors' => $exception->validator->getMessageBag()], 422);
         }
 

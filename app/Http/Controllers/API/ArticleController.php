@@ -2,10 +2,11 @@
 
 namespace laravelito\Http\Controllers\API;
 
-use laravelito\Article;
 use Illuminate\Http\Request;
+use laravelito\Article;
 use laravelito\Http\Controllers\Controller;
 use laravelito\Http\Requests\StoreArticle;
+use laravelito\Http\Resources\Article as ArticleResource;
 
 class ArticleController extends Controller
 {
@@ -16,7 +17,22 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return Article::all();
+        //La función de autenticación devuelve una instancia de autenticador.
+        // en este caso cada usuario posee articulos
+        // $articles = auth()->user()->articles;
+        // return response()->json([
+        //     'success' => true,
+        //     'data' => $articles
+        // ]);
+
+        //probando resource
+        $articulos = Article::paginate(5);
+        // return newArticleCollection($articulos);
+        return ArticleResource::collection($articulos)->additional(['meta' =>
+            ['version' => '1.0.0',
+            'API_base_url' => url('/')],
+        ]);
+
     }
 
     /**
@@ -38,11 +54,11 @@ class ArticleController extends Controller
     public function store(StoreArticle $request)
     {
         $validated = $request->validated();
-       if ($validated) {
+        if ($validated) {
             return response()->json($request, 201);
         } else {
             return response()->json([
-                'Error' => 'que andai haciendo'
+                'Error' => 'que andai haciendo',
             ]);
         }
 
