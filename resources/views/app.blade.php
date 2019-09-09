@@ -10,11 +10,7 @@
 
         <title>Laravel SPA</title>
 
-        <script>
-        window.Laravel = {
-            'csrfToken' => '{{csrf_token()}}',
-        };
-        </script>
+
     </head>
     <body>
 

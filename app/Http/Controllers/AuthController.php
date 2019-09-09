@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use laravelito\User;
+use Log;
 
 class AuthController extends Controller
 {
@@ -26,16 +27,16 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string|confirmed',
         ]);
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
         ]);
         $user->save();
         return response()->json([
-            'message' => 'Successfully created user!'
+            'message' => 'Successfully created user!',
         ], 201);
     }
 
@@ -51,32 +52,49 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        //validamos los datos traidos de request
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'remember_me' => 'boolean'
-        ]);
-        $credentials = request(['email', 'password']);
-        //si no tiene autorizacion , mensaje y error 401
-        if(!Auth::attempt($credentials))
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
+        try {
+            //validamos los datos traidos de request
+            $request->validate([
+                'email' => 'required|string|email',
+                'password' => 'required|string',
+                'remember_me' => 'boolean',
+            ]);
+            $credentials = request(['email', 'password']);
+            //si no tiene autorizacion , mensaje y error 401
+            if (!Auth::attempt($credentials)) {
+                return response()->json([
+                    'message' => 'Unauthorized',
+                ], 401);
+            }
 
-        $user = $request->user();
-        $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->token;
-        if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addMinutes(10);
-        $token->save();
-        return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
-                $tokenResult->token->expires_at
-            )->toDateTimeString()
-        ]);
+            $user = $request->user();
+            $tokenResult = $user->createToken('Personal Access Token');
+            $token = $tokenResult->token;
+            if ($request->remember_me) {
+                $token->expires_at = Carbon::now()->addMinutes(10);
+            }
+
+            $token->save();
+            return response()->json([
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse(
+                    $tokenResult->token->expires_at
+                )->toDateTimeString(),
+            ]);
+        } catch (Exception $e) {
+            // report($e);
+            // abort(500, 'Could not create office or assign it to administrator');
+            // return false;
+
+            Log::critical("code=[{$e->getCode()}] file=[{$e->getFile()}] line=[{$e->getLine()}] message=[{$e->getMessage()}]");
+            return response()->json([
+                'status' => 'error',
+                'code' => $e->getCode(),
+                'messages' => $e->getMessage()
+            ]);
+        }
+
     }
 
     /**
@@ -86,9 +104,10 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
+        //elimina todos los token del usuario
         $request->user()->token()->revoke();
         return response()->json([
-            'message' => 'Successfully logged out'
+            'message' => 'Successfully logged out',
         ]);
     }
 
@@ -102,7 +121,8 @@ class AuthController extends Controller
         return response()->json($request->user());
     }
 
-    public function register (Request $request) {
+    public function register(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -110,12 +130,11 @@ class AuthController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        if ($validator->fails())
-        {
-            return response(['errors'=>$validator->errors()->all()], 422);
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()->all()], 422);
         }
 
-        $request['password']=Hash::make($request['password']);
+        $request['password'] = Hash::make($request['password']);
         $user = User::create($request->toArray());
 
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;

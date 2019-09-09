@@ -12,6 +12,17 @@
  */
 //ruta inicial
 Route::get('/', 'Web\AppController@getApp');
+Route::get('no-auth', function () {
+    return response()->json(
+        [
+            "errors" => [
+                "status" => 401,
+                "message" => "Unauthenticated",
+            ],
+        ], 401
+    );
+})->name('no-auth');
+
 //ruta de login
 // Route::middleware(['guest'])->group(function () {
 //     Route::get('/login', 'Web\AppController@getLogin')
@@ -23,4 +34,7 @@ Route::get('/', 'Web\AppController@getApp');
 
 // });
 
-
+// Global View Routes
+Route::get('{path}', function () {
+    return view('app');
+})->where('path', '.*');
