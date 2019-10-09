@@ -26,7 +26,10 @@ class ArticleController extends Controller
         // ]);
 
         //probando resource
-        $articulos = Article::paginate(5);
+        $articulos = auth()->user()->articles()->paginate(2);
+        // $user = Article::find(20)->users;
+        // return $user;
+
         // return newArticleCollection($articulos);
         return ArticleResource::collection($articulos)->additional(['meta' =>
             ['version' => '1.0.0',

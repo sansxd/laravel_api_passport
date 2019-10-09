@@ -55,19 +55,21 @@ class AuthController extends Controller
         try {
             //validamos los datos traidos de request
             $request->validate([
-                'email' => 'required|string|email',
-                'password' => 'required|string',
+                'email' => ['required','string','email'],
+                'password' =>['required','string'],
                 'remember_me' => 'boolean',
             ]);
             $credentials = request(['email', 'password']);
             //si no tiene autorizacion , mensaje y error 401
             if (!Auth::attempt($credentials)) {
                 return response()->json([
-                    'message' => 'Unauthorized',
+                    'message' => 'No autorizado',
                 ], 401);
             }
 
             $user = $request->user();
+            var_dump(now());
+            exit();
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->token;
             if ($request->remember_me) {
