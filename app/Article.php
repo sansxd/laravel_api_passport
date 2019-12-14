@@ -9,7 +9,8 @@ class Article extends Model
 {
     protected $table = 'articles';
 
-    protected $fillable = ['title','body'];
+    protected $fillable = ['title', 'body'];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function users()
     {

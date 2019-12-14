@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::apiResources([
+    'articles' => 'API\ArticleController',
+]);
 
 Route::group(['prefix' => 'v1', 'middleware' => ['auth:api']], function () {
     /* esta ruta va asi http: //127.0.0.1:8000/api/v1/user
@@ -21,9 +24,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api']], function () {
     });
 
     //api crud de articulos //127.0.0.1:8000/api/v1/articles
-    Route::apiResources([
-        'articles' => 'API\ArticleController',
-    ]);
+    // Route::apiResources([
+    //     'articles' => 'API\ArticleController',
+    // ]);
 });
 // Route::apiResources([
 //     'articles' => 'API\ArticleController',

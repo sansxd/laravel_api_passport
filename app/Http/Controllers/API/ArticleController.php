@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use laravelito\Article;
 use laravelito\Http\Controllers\Controller;
 use laravelito\Http\Requests\StoreArticle;
-use laravelito\Http\Resources\Article as ArticleResource;
+use laravelito\Http\Resources\GeneralCollection;
 
 class ArticleController extends Controller
 {
@@ -26,15 +26,13 @@ class ArticleController extends Controller
         // ]);
 
         //probando resource
-        $articulos = auth()->user()->articles()->paginate(2);
-        // $user = Article::find(20)->users;
+        // $articulos = auth()->user()->articles()->paginate(2);
+        $user = Article::all();
+        return new GeneralCollection($user);
+
         // return $user;
 
         // return newArticleCollection($articulos);
-        return ArticleResource::collection($articulos)->additional(['meta' =>
-            ['version' => '1.0.0',
-            'API_base_url' => url('/')],
-        ]);
 
     }
 

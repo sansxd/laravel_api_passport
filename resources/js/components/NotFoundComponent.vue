@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Error Component</div>
+                    <div class="card-header">Error Componente</div>
 
                     <div class="card-body">
                         Error 404
@@ -16,8 +16,18 @@
 
 <script>
     export default {
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+            testconsole(){
+                console.log('error page 404')
+            }
+        },
         mounted() {
-            console.log('error page 404')
+            this.testconsole();
         }
     }
 </script>
