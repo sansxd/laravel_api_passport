@@ -68,8 +68,6 @@ class AuthController extends Controller
             }
 
             $user = $request->user();
-            var_dump(now());
-            exit();
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->token;
             if ($request->remember_me) {
@@ -89,14 +87,14 @@ class AuthController extends Controller
             // abort(500, 'Could not create office or assign it to administrator');
             // return false;
 
-            Log::critical("code=[{$e->getCode()}] file=[{$e->getFile()}] line=[{$e->getLine()}] message=[{$e->getMessage()}]");
+            Log::critical("code=[{$e->getCode()}] 
+            file=[{$e->getFile()}] line=[{$e->getLine()}] message=[{$e->getMessage()}]");
             return response()->json([
                 'status' => 'error',
                 'code' => $e->getCode(),
                 'messages' => $e->getMessage()
             ]);
         }
-
     }
 
     /**
@@ -125,7 +123,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -143,6 +140,5 @@ class AuthController extends Controller
         $response = ['token' => $token];
 
         return response($response, 200);
-
     }
 }

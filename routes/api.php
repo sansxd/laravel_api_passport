@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 |--------------------------------------------------------------------------
 
  */
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+
 Route::apiResources([
     'articles' => 'API\ArticleController',
 ]);
@@ -24,16 +22,16 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api']], function () {
     });
 
     //api crud de articulos //127.0.0.1:8000/api/v1/articles
-    // Route::apiResources([
-    //     'articles' => 'API\ArticleController',
-    // ]);
+    Route::apiResources([
+        'articles' => 'API\ArticleController',
+    ]);
 });
 // Route::apiResources([
 //     'articles' => 'API\ArticleController',
 // ]);
 
 Route::group([
-    'prefix' => 'auth',
+    'prefix' => 'v1/auth',
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signup');
@@ -53,5 +51,6 @@ Route::group([
 // Así es como funciona , aqui devolvemos una resspuesta Json con http 404
 Route::fallback(function () {
     return response()->json([
-        'message' => 'Page Not Found. If error persists, contact sergioans95@hotmail.com'], 404);
+        'message' => 'Page Not Found. If error persists, contact sergioans95@hotmail.com'
+    ], 404);
 });

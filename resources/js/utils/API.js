@@ -1,26 +1,19 @@
 import axios from 'axios';
+//An even better option is to create 
+//an instance of axios that specifically targets our base route.
+const token = localStorage.getItem('token');
 
-axios.create({
+const apiAxios = axios.create({
     baseURL: 'http://127.0.0.1:8000/api/v1',
-    responseType: 'json'
+    headers: {
+        Authorization: 'Bearer ' + token,
+        'Accept-Version': '~1'
+    },
+    responseType: 'json',
 });
 
 export default {
-    auth: {
-        userLogin(payload) {
-            return apiClient.post('/auth/login/', payload);
-        },
-        userAliveAndActive() {
-            return apiClient.post('/auth/check/');
-        },
-        userLogout() {
-            return apiClient.post('/auth/logout/');
-        },
-        generateResetToken(payload) {
-            return apiClient.post('/auth/generate_reset_token/', payload);
-        },
-        resetPassword(payload) {
-            return apiClient.post('/auth/reset_password/', payload);
-        }
-    }
+    getArticles: () => apiAxios.get('/articles'),
+    login: params => apiAxios.post('/auth/login', params),
+
 };

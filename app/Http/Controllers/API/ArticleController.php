@@ -10,30 +10,25 @@ use laravelito\Http\Resources\GeneralCollection;
 
 class ArticleController extends Controller
 {
+    protected $article;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(Article $article)
+    {
+        $this->article = $article;
+    }
     public function index()
     {
+        //probando resource
+        // $article = Article::all();
+        $article = $this->article::all();
+        return new GeneralCollection($article);
         //La función de autenticación devuelve una instancia de autenticador.
         // en este caso cada usuario posee articulos
         // $articles = auth()->user()->articles;
-        // return response()->json([
-        //     'success' => true,
-        //     'data' => $articles
-        // ]);
-
-        //probando resource
-        // $articulos = auth()->user()->articles()->paginate(2);
-        $user = Article::all();
-        return new GeneralCollection($user);
-
-        // return $user;
-
-        // return newArticleCollection($articulos);
-
     }
 
     /**
@@ -86,7 +81,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return "je";
     }
 
     /**

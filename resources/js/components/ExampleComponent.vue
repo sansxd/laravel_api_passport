@@ -30,7 +30,7 @@ export default {
   methods: {
     async testconsole() {
       try {
-        const response = await axios.get(`api/articles`)
+        const response = await this.$api.getArticles()
         console.log(response.data)
         console.log(response.status)
         console.log(response.statusText)

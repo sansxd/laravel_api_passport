@@ -6,17 +6,13 @@ import Vuetify from 'vuetify';
 
 import router from './router';
 import App from './components/App';
-import API from './utils/API';
+import api from './utils/API';
 
-require('./bootstrap');
-
-axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/v1'
-});
 
 Vue.use(VueAxios, axios);
 Vue.use(Vuetify);
 Vue.config.productionTip = false;
+Vue.prototype.$api = api
 
 const app = new Vue({
     el: '#app',

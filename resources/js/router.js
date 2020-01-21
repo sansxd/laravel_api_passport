@@ -32,6 +32,14 @@ export default new VueRouter({
             )
         },
         {
+            path: '/login',
+            name: 'login',
+            component: Vue.component(
+                'Login',
+                require('./components/Login.vue').default
+            )
+        },
+        {
             path: '*',
             component: Vue.component(
                 'Example',
