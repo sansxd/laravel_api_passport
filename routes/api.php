@@ -6,29 +6,18 @@ use Illuminate\Http\Request;
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-
- */
-
-Route::apiResources([
-    'articles' => 'API\ArticleController',
-]);
+*/
 
 Route::group(['prefix' => 'v1', 'middleware' => ['auth:api']], function () {
     /* esta ruta va asi http: //127.0.0.1:8000/api/v1/user
     con un prefix de version, y con el middleware de auth:api,
     si no esta en el middleware , lo redireccionara a login */
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
 
     //api crud de articulos //127.0.0.1:8000/api/v1/articles
     Route::apiResources([
         'articles' => 'API\ArticleController',
     ]);
 });
-// Route::apiResources([
-//     'articles' => 'API\ArticleController',
-// ]);
 
 Route::group([
     'prefix' => 'v1/auth',

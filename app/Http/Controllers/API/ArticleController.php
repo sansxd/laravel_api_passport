@@ -7,6 +7,7 @@ use laravelito\Article;
 use laravelito\Http\Controllers\Controller;
 use laravelito\Http\Requests\StoreArticle;
 use laravelito\Http\Resources\GeneralCollection;
+use laravelito\Http\Resources\Article as ArticleResource;
 
 class ArticleController extends Controller
 {
@@ -20,27 +21,20 @@ class ArticleController extends Controller
     {
         $this->article = $article;
     }
-    public function index()
+    public function index(): GeneralCollection
     {
-        //probando resource
-        // $article = Article::all();
-        $article = $this->article::all();
-        return new GeneralCollection($article);
-        //La función de autenticación devuelve una instancia de autenticador.
-        // en este caso cada usuario posee articulos
-        // $articles = auth()->user()->articles;
+        try {
+            //probando resource
+            // $article = Article::all();
+            $article = $this->article::all();
+            return new GeneralCollection($article);
+            //La función de autenticación devuelve una instancia de autenticador.
+            // en este caso cada usuario posee articulos
+            // $articles = auth()->user()->articles;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -49,19 +43,18 @@ class ArticleController extends Controller
      */
     public function store(StoreArticle $request)
     {
-        $validated = $request->validated();
-        if ($validated) {
-            return response()->json($request, 201);
-        } else {
-            return response()->json([
-                'Error' => 'que andai haciendo',
-            ]);
+        try {
+            $validated = $request->validated();
+            if ($validated) {
+                $data = auth()->user()->articles()->create($request->all());
+                return new ArticleResource($data);
+            }
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
-
         // $article = Article::create($request->all());
         // return response()->json($article, 201);
     }
-
     /**
      * Display the specified resource.
      *
@@ -70,20 +63,8 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return $article;
+        return new ArticleResource($article);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \laravelito\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Article $article)
-    {
-        return "je";
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -91,12 +72,11 @@ class ArticleController extends Controller
      * @param  \laravelito\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(StoreArticle $request, Article $article)
     {
         $article->update($request->all());
         return response()->json($article, 200);
     }
-
     /**
      * Remove the specified resource from storage.
      *

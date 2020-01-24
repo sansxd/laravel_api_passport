@@ -51,11 +51,18 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
-                'error' => 'Entry for ' . str_replace('App\\', '', $exception->getModel()) . ' not found'], 404);
+                'error' => 'Entry for ' . str_replace('App\\', '', $exception->getModel()) . ' not found'
+            ], 404);
+        }
+        if (in_array('api', $request->route()->middleware())) {
+            $request->headers->set('Accept', 'application/json');
         }
         //esto cambia el mensaje json , ya que por defecto viene en ingles.
         elseif ($exception instanceof ValidationException) {
-            return response()->json(['message' => 'Los datos proporcionados no son válidos.', 'errors' => $exception->validator->getMessageBag()], 422);
+            return response()->json([
+                'message' => 'Los datos proporcionados no son válidos.',
+                'errors' => $exception->validator->getMessageBag()
+            ], 422);
         }
         // elseif ($exception instanceof AuthenticationException) {
         //     return response()->json(
@@ -67,7 +74,6 @@ class Handler extends ExceptionHandler
         //         ], 401
         //     );
         // }
-
         return parent::render($request, $exception);
     }
 }

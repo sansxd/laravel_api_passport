@@ -7,6 +7,7 @@ use Closure;
 /* MIDDLEWARE PARA FORZAR RESPUES JSON
 y debido a que usamos Laravel solo como un proveedor de API,
 vamos a obligar a todas las rutas a devolver json.  */
+
 class ForceJsonResponse
 {
     /**
@@ -16,7 +17,7 @@ class ForceJsonResponse
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $request->headers->set('Accept', 'application/json');
         return $next($request);

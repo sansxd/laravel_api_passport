@@ -23,10 +23,10 @@ class StoreArticle extends FormRequest
      */
     public function rules()
     {
+        //'user_id' => 'exists:App\User,id'
         return [
             'title' => 'required|min:5|max:255',
             'body' => 'required',
         ];
-
     }
 }
