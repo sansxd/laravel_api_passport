@@ -56074,15 +56074,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************!*\
   !*** ./resources/js/components/Login.vue ***!
   \*******************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Login_vue_vue_type_template_id_6bdc8b8e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Login.vue?vue&type=template&id=6bdc8b8e& */ "./resources/js/components/Login.vue?vue&type=template&id=6bdc8b8e&");
 /* harmony import */ var _Login_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Login.vue?vue&type=script&lang=js& */ "./resources/js/components/Login.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Login_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Login_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -56112,7 +56111,7 @@ component.options.__file = "resources/js/components/Login.vue"
 /*!********************************************************************!*\
   !*** ./resources/js/components/Login.vue?vue&type=script&lang=js& ***!
   \********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56276,8 +56275,8 @@ __webpack_require__.r(__webpack_exports__);
 //an instance of axios that specifically targets our base route.
 
 var token = localStorage.getItem('token');
+var version = '/api/v1/';
 var apiAxios = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-  baseURL: 'http://127.0.0.1:8000/api/v1',
   headers: {
     Authorization: 'Bearer ' + token,
     'Accept-Version': '~1'
@@ -56286,10 +56285,10 @@ var apiAxios = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
 });
 /* harmony default export */ __webpack_exports__["default"] = ({
   getArticles: function getArticles() {
-    return apiAxios.get('/articles');
+    return apiAxios.get("".concat(version, "articles"));
   },
   login: function login(params) {
-    return apiAxios.post('/auth/login', params);
+    return apiAxios.post("".concat(version, "auth/login"), params);
   }
 });
 

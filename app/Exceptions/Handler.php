@@ -54,9 +54,6 @@ class Handler extends ExceptionHandler
                 'error' => 'Entry for ' . str_replace('App\\', '', $exception->getModel()) . ' not found'
             ], 404);
         }
-        if (in_array('api', $request->route()->middleware())) {
-            $request->headers->set('Accept', 'application/json');
-        }
         //esto cambia el mensaje json , ya que por defecto viene en ingles.
         elseif ($exception instanceof ValidationException) {
             return response()->json([
