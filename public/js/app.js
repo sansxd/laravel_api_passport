@@ -1908,6 +1908,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3419,61 +3428,86 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("h1", [_vm._v("Bienvenido a posteos")]),
-    _vm._v(" "),
-    !_vm.token
-      ? _c(
-          "div",
-          [
-            _c("router-link", { attrs: { to: "/login" } }, [
-              _vm._v("Iniciar sesion")
-            ]),
-            _vm._v(" "),
-            _c("router-link", { attrs: { to: "/register" } }, [
-              _vm._v("registrarse")
-            ])
-          ],
-          1
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("h1", [_vm._v("Bienvenido a mi portafolio con posteos")]),
+      _vm._v(" "),
+      !_vm.token
+        ? _c(
+            "div",
+            [
+              _c("router-link", { attrs: { to: "/login" } }, [
+                _vm._v("Iniciar sesion")
+              ]),
+              _vm._v(" "),
+              _c("router-link", { attrs: { to: "/register" } }, [
+                _vm._v("registrarse")
+              ])
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "row justify-content-center" }, [
         _vm.posts && _vm.posts.length
-          ? _c(
-              "ul",
-              _vm._l(_vm.posts, function(post) {
-                return _c("li", { key: post.id }, [
-                  _c("p", [_c("strong", [_vm._v(_vm._s(post.title))])]),
-                  _vm._v(" "),
-                  _c("p", [_vm._v(_vm._s(post.body))])
-                ])
-              }),
-              0
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.errors && _vm.errors.length
-          ? _c(
-              "ul",
-              [
-                _c("h4", [_vm._v("Ocurrio un error para mostrar los post")]),
-                _vm._v(" "),
-                _vm._l(_vm.errors, function(error) {
-                  return _c(
-                    "li",
-                    { key: error.id, staticStyle: { color: "red" } },
-                    [_vm._v(_vm._s(error.message))]
+          ? _c("div", { staticClass: "col-md-8" }, [
+              _c(
+                "ul",
+                _vm._l(_vm.posts, function(post) {
+                  return _c("li", { key: post.id }, [
+                    _c("p", [_c("strong", [_vm._v(_vm._s(post.title))])]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(post.body))])
+                  ])
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.length
+                ? _c(
+                    "ul",
+                    [
+                      _c("h4", [
+                        _vm._v("Ocurrio un error para mostrar los post")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.errors, function(error) {
+                        return _c(
+                          "li",
+                          { key: error.id, staticStyle: { color: "red" } },
+                          [_vm._v(_vm._s(error.message))]
+                        )
+                      })
+                    ],
+                    2
                   )
-                })
-              ],
-              2
-            )
-          : _vm._e()
-      ])
-    ])
-  ])
+                : _vm._e()
+            ])
+          : _c("div", [
+              _c("h2", [
+                _vm._v(" Solo se mostraran los post cuando inicies sesion.")
+              ])
+            ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "v-footer",
+        { staticClass: "font-weight-medium", attrs: { absolute: "" } },
+        [
+          _c("v-col", { staticClass: "text-center", attrs: { cols: "12" } }, [
+            _vm._v(
+              "\n      " + _vm._s(new Date().getFullYear()) + " —\n      "
+            ),
+            _c("strong", [_vm._v("Backend Laravel con Front de Vuejs")])
+          ])
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
