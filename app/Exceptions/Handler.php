@@ -3,7 +3,6 @@
 namespace laravelito\Exceptions;
 
 use Exception;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
@@ -61,16 +60,6 @@ class Handler extends ExceptionHandler
                 'errors' => $exception->validator->getMessageBag()
             ], 422);
         }
-        // elseif ($exception instanceof AuthenticationException) {
-        //     return response()->json(
-        //         [
-        //             "errors" => [
-        //                 "status" => 401,
-        //                 "message" => "Unauthenticated",
-        //             ],
-        //         ], 401
-        //     );
-        // }
         return parent::render($request, $exception);
     }
 }

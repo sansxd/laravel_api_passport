@@ -25,10 +25,10 @@ export default new VueRouter({
     routes: [
         {
             path: '/',
-            name: 'example',
+            name: 'inicio',
             component: Vue.component(
-                'Example',
-                require('./components/ExampleComponent.vue').default
+                'Inicio',
+                require('./components/InicioComponent.vue').default
             )
         },
         {
@@ -37,6 +37,14 @@ export default new VueRouter({
             component: Vue.component(
                 'Login',
                 require('./components/Login.vue').default
+            )
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: Vue.component(
+                'Register',
+                require('./components/Register.vue').default
             )
         },
         {
