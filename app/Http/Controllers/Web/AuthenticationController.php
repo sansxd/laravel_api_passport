@@ -5,6 +5,8 @@ namespace laravelito\Http\Controllers\Web;
 use Auth;
 use laravelito\Http\Controllers\Controller;
 use Socialite;
+use Carbon\Carbon;
+use App\User;
 
 class AuthenticationController extends Controller
 {
@@ -61,4 +63,5 @@ class AuthenticationController extends Controller
         return redirect('/');
 
     }
+
 }

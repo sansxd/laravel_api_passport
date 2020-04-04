@@ -12,17 +12,18 @@
  */
 //ruta inicial
 Route::get('/', 'Web\AppController@getApp');
-//ruta de login
-Route::middleware(['guest'])->group(function () {
-    Route::get('/login', 'Web\AppController@getLogin')
-        ->name('login');
-    //{social} es la variable
-    Route::get('/login/{social}', 'Web\AuthenticationController@getSocialRedirect');
+Route::get('no-auth', function () {
+    return response()->json(
+        [
+            "errors" => [
+                "status" => 401,
+                "message" => "Unauthenticated",
+            ],
+        ], 401
+    );
+})->name('no-auth');
 
-    Route::get('/login/{social}/callback', 'Web\AuthenticationController@getSocialCallback');
-
-});
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+// Global View Routes
+Route::get('{path}', function () {
+    return view('app');
+})->where('path', '.*');
